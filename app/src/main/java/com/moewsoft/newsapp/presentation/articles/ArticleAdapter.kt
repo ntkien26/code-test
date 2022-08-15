@@ -8,12 +8,13 @@ import com.bumptech.glide.Glide
 import com.moewsoft.newsapp.databinding.ItemArticleBinding
 import com.moewsoft.newsapp.domain.model.Article
 import com.moewsoft.newsapp.presentation.base.BaseRecyclerViewAdapter
+import com.moewsoft.newsapp.presentation.utils.TimeUtils
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 
 @FragmentScoped
-class ArticleAdapter @Inject constructor() :
+class ArticleAdapter @Inject constructor(val onItemClicked: (Article) -> Unit) :
     BaseRecyclerViewAdapter<Article>() {
 
     private var mScrollListener: RecyclerView.OnScrollListener? = null
@@ -29,10 +30,6 @@ class ArticleAdapter @Inject constructor() :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    fun setScrollListener(scrollListener: RecyclerView.OnScrollListener) {
-        this.mScrollListener = scrollListener
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ArticleHolder(ItemArticleBinding.inflate(LayoutInflater.from(parent.context)))
     }
@@ -45,7 +42,10 @@ class ArticleAdapter @Inject constructor() :
                 Glide.with(holder.itemView).load(data.image).into(ivImage)
                 tvTitle.text = data.title
                 tvDescription.text = data.description
-                tvUpdatedAt.text = data.publishedAt
+                tvUpdatedAt.text = TimeUtils.parseTimeToDDMMYYYY(data.publishedAt)
+                root.setOnClickListener {
+                    onItemClicked(data)
+                }
             }
         }
     }

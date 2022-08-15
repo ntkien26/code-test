@@ -25,7 +25,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         initObserver()
         initConfig()
         initListener()
-        initTask()
     }
 
     override fun onDestroyView() {
@@ -38,8 +37,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
     open fun initConfig() {}
 
     open fun initListener() {}
-
-    open fun initTask() {}
 
     open fun release() {}
 
