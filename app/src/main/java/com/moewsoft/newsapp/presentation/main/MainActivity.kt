@@ -42,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), FragmentNavigator {
     }
 
     override fun setToolBarTitle(title: String) {
-        binding.toolbarTitle.text = title
+        binding.toolbarTitle.text = 5
     }
 
     override fun context(): Context = this
